@@ -3,7 +3,7 @@
 jid, password = "XXX@YYY.com", "secretpassword";
 passcode="x"; --- the bot will not answer unless commands are prefixed by this pass code, for example "x list"
 
-command_modules = {"list", "flick"}; --- list of modules to load. each module handle one or more commands
+command_modules = {"list", "devices", "flick", "nflick", "on", "battery"}; --- $
 
 server_url = "http://localhost:8080";
 

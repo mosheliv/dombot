@@ -10,6 +10,9 @@ currently the bot comes with 3 commands:
 	list - list all devices (or a subset by type) with name, data and idx
 	dump - like list but dumps most of the useful fields
 	flick - turn a switch on or off by idx
+	devices - return list of devices
+	nflick - flick device on or off by name
+	batteries - list all battery operated devices and their level
 
 #Installation
 

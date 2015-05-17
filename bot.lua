@@ -1,5 +1,8 @@
 local commands = {};
 
+http = require "socket.http";
+JSON = assert(loadfile "JSON.lua")() -- one-time load of the routines
+
 -- Load the verse XMPP library
 require "verse".init("client");
 -- Load the configuration file
@@ -60,7 +63,42 @@ commands = {
 			["help"] = {handler=help_handler, description=nil}
 		};
 
+function form_device_name(parsed_cli)
+        command = parsed_cli[2]
+        DeviceName = parsed_cli[3]
+        len_parsed_cli = #parsed_cli
+        if len_parsed_cli > 3 then
+                for i = 4, len_parsed_cli do
+                        DeviceName = DeviceName..' '..parsed_cli[i]
+                end
+        end
+        return DeviceName
+end
 
+function device_list(DeviceType)
+        local t, jresponse, status, decoded_response
+        t = server_url.."/json.htm?type="..DeviceType.."&order=name"
+        print ("JSON request <"..t..">");
+        jresponse, status = http.request(t)
+        decoded_response = JSON:decode(jresponse)
+        return decoded_response
+end
+
+function idx_from_name(DeviceName,DeviceType)
+        local idx, k, record, decoded_response
+        decoded_response = device_list(DeviceType)
+        result = decoded_response["result"]
+        for k,record in pairs(result) do
+                if type(record) == "table" then
+                        if string.lower(record['Name']) == string.lower(DeviceName) then
+                                print(record['idx'])
+                                idx = record['idx']
+                        end
+                end
+        end
+        return idx
+end
+                          
 -- Load the modules that handle the commands. each module can have more than one command associated with it (see the list example)
 print("Loading command modules...")
 for i, m in ipairs(command_modules) do
@@ -117,20 +155,22 @@ c:hook("ready", function ()
 		end
 		--- check for passcode and execute
 		if passcode == nil  or parsed_command[1] == passcode then
-			c:send(verse.message({type = "chat", to = message.attr.from}, "Hello, master! got command <"..parsed_command[2]..">"));
+--			c:send(verse.message({type = "chat", to = message.attr.from}, "Hello, master! got command <"..parsed_command[2]..">"));
 			command_dispatch = commands[parsed_command[2]];
 			if command_dispatch then
 				status, text = command_dispatch.handler(parsed_command);
 			else
-				text = "command <"..parsed_command[2].."> not cound, master";
+				text = "command <"..parsed_command[2].."> not found";
 			end
 			c:send(verse.message({type = "chat", to = message.attr.from}, text));
-
-				
 		end
         end);
 end);
 
+-- Set the stored devices / scenes list
+StoredType = 'devices'
+StoredList = {}
+ItemNumber = 0
 
 print("Starting loop...")
 verse.loop()
