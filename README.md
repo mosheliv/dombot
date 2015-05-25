@@ -40,6 +40,6 @@ try it out by sending “x list” (x is the passphrase)
 #Adding commands
 just copy list or flick and modify them. add the name of your modules to bot.cfg, thats it!
 
-Credits
+#Credits
 JSON library by Jeffrey Friedl
-Special thanks for Matthew Wild for writing Verse and helping me out with starting
+Special thanks for Matthew Wild for writing Verse and helping me out with starting (and continuing :-) )
