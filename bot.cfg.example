@@ -6,4 +6,5 @@ passcode="x"; --- the bot will not answer unless commands are prefixed by this p
 command_modules = {"list", "devices", "flick", "nflick", "on", "battery"}; --- $
 
 server_url = "http://localhost:8080";
+--- or use http://<username:password@>domoticz-ip<:port> if you have user/pass on your domoticz
 
