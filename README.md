@@ -1,4 +1,4 @@
-# dombot
+# Dombot
 Bot for controlling Domoticz using Google Hangouts
 Introduction
 this is a simple framework for controlling an inquiring domoticz using xmpp chat. I use google hangouts but any other xmpp compatible chat should work fine.
@@ -13,6 +13,12 @@ currently the bot comes with 3 commands:
 	devices - return list of devices
 	nflick - flick device on or off by name
 	batteries - list all battery operated devices and their level
+
+# Pre-requisits
+1. lua5.1 
+2. lua-socket 
+3. lua5.1-expat
+4. lua-sec
 
 #Installation
 
@@ -34,6 +40,6 @@ try it out by sending “x list” (x is the passphrase)
 #Adding commands
 just copy list or flick and modify them. add the name of your modules to bot.cfg, thats it!
 
-Credits
-JSON library by Jeffrey Friedl
-Special thanks for Matthew Wild for writing Verse and helping me out with starting
+#Credits
+1. JSON library by Jeffrey Friedl
+2. Special thanks for Matthew Wild for writing Verse and helping me out with starting (and continuing :-) )
